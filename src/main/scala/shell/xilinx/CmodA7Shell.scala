@@ -171,7 +171,7 @@ class CmodA7Shell()(implicit p: Parameters) extends CmodA7ShellBasicOverlays
     resetPin := ~reset_ibuf.io.O
 
     pllReset :=
-      (!reset_ibuf.io.O) || powerOnReset //CmodA7 is active low reset
+      (reset_ibuf.io.O) || powerOnReset //CmodA7 is active low reset
   }
 }
 

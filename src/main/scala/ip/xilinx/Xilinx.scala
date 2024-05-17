@@ -157,8 +157,8 @@ class Series7MMCM(c : PLLParameters) extends BlackBox with PLLInstance {
     val phaseMin = r.phaseDeg - r.phaseErrorDeg
     val phaseMax = r.phaseDeg + r.phaseErrorDeg
     val freqMin = r.freqMHz * (1 - r.freqErrorPPM / 1000000)
-    val freqMax = r.freqMHz * (1 + r.freqErrorPPM / 1000000)
-    s"""set jitter [get_property CONFIG.CLKOUT${i+1}_JITTER [get_ips ${moduleName}]] //TODO ADD BACK IN JITTER CHECK
+    val freqMax = r.freqMHz * (1 + r.freqErrorPPM / 1000000) //TODO ADD BACK IN JITTER CHECK
+    s"""set jitter [get_property CONFIG.CLKOUT${i+1}_JITTER [get_ips ${moduleName}]]
        |set phase [get_property CONFIG.MMCM_CLKOUT${i}_PHASE [get_ips ${moduleName}]]
        |if {$$phase < ${phaseMin} || $$phase > ${phaseMax}} {
        |  puts "Achieved phase $$phase degrees is outside tolerated range ${phaseMin}-${phaseMax}"
