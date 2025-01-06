@@ -126,7 +126,7 @@ class CTSResetGeorgeFPGAShellPlacer(val shell: GeorgeFPGAShellBasicOverlays, val
 abstract class GeorgeFPGAShellBasicOverlays()(implicit p: Parameters) extends Series7Shell {
   // Order matters; ddr depends on sys_clock
   val sys_clock = Overlay(ClockInputOverlayKey, new SysClockGeorgeFPGAShellPlacer(this, ClockInputShellInput()))
-  val led       = Seq.tabulate(5)(i => Overlay(LEDOverlayKey, new LEDGeorgeFPGAShellPlacer(this, LEDMetas(i))(valName = ValName(s"led_$i"))))
+  val led       = Seq.tabulate(2)(i => Overlay(LEDOverlayKey, new LEDGeorgeFPGAShellPlacer(this, LEDMetas(i))(valName = ValName(s"led_$i"))))
   // val uart      = Overlay(UARTOverlayKey, new UARTGeorgeFPGAShellPlacer(this, UARTShellInput()))
   // val sdio      = Overlay(SPIOverlayKey, new SDIOGeorgeFPGAShellPlacer(this, SPIShellInput()))
   // val jtag      = Overlay(JTAGDebugOverlayKey, new JTAGDebugGeorgeFPGAShellPlacer(this, JTAGDebugShellInput()))
@@ -168,10 +168,10 @@ class GeorgeFPGAShell()(implicit p: Parameters) extends GeorgeFPGAShellBasicOver
     val powerOnReset = PowerOnResetFPGAOnly(sysclk)
     sdc.addAsyncPath(Seq(powerOnReset))
 
-    resetPin := ~reset_ibuf.io.O
+    resetPin := reset_ibuf.io.O
 
     pllReset :=
-      (reset_ibuf.io.O) || powerOnReset //GeorgeFPGA is active low reset
+      (~reset_ibuf.io.O) || powerOnReset //GeorgeFPGA is active low reset
   }
 }
 
