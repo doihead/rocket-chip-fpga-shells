@@ -227,4 +227,3 @@ class GeorgeFPGAShell()(implicit p: Parameters) extends GeorgeFPGAShellBasicOver
       (~reset_ibuf.io.O) || powerOnReset //GeorgeFPGA is active low reset
   }
 }
-
