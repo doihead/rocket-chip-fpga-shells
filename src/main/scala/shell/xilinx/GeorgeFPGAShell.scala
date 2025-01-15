@@ -8,10 +8,7 @@ import org.chipsalliance.cde.config._
 import sifive.fpgashells.clocks._
 import sifive.fpgashells.ip.xilinx._
 import sifive.fpgashells.shell._
-<<<<<<< HEAD
 import freechips.rocketchip.util.ElaborationArtefacts
-=======
->>>>>>> cf81a93 (started working on george shell)
 
 class SysClockGeorgeFPGAPlacedOverlay(val shell: GeorgeFPGAShellBasicOverlays, name: String, val designInput: ClockInputDesignInput, val shellInput: ClockInputShellInput)
   extends SingleEndedClockInputXilinxPlacedOverlay(name, designInput, shellInput)
@@ -34,21 +31,12 @@ class SPIFlashGeorgeFPGAPlacedOverlay(val shell: GeorgeFPGAShellBasicOverlays, n
 {
 
   shell { InModuleBody {
-<<<<<<< HEAD
     val packagePinsWithPackageIOs = Seq(("D12", IOPin(io.qspi_sck)),
       ("B11", IOPin(io.qspi_cs)),
       ("A11", IOPin(io.qspi_dq(0))),
       ("D13", IOPin(io.qspi_dq(1))),
       ("B18", IOPin(io.qspi_dq(2))),
       ("G13", IOPin(io.qspi_dq(3))))
-=======
-    val packagePinsWithPackageIOs = Seq(("E9", IOPin(io.qspi_sck)),
-      ("L13", IOPin(io.qspi_cs)),
-      ("K17", IOPin(io.qspi_dq(0))),
-      ("K18", IOPin(io.qspi_dq(1))),
-      ("L14", IOPin(io.qspi_dq(2))),
-      ("M14", IOPin(io.qspi_dq(3))))
->>>>>>> cf81a93 (started working on george shell)
 
     packagePinsWithPackageIOs foreach { case (pin, io) => {
       shell.xdc.addPackagePin(io, pin)
@@ -109,7 +97,6 @@ class JTAGDebugGeorgeFPGAPlacedOverlay(val shell: GeorgeFPGAShellBasicOverlays, 
     shell.sdc.addClock("JTCK", IOPin(io.jtag_TCK), 10)
     shell.sdc.addGroup(clocks = Seq("JTCK"))
     shell.xdc.clockDedicatedRouteFalse(IOPin(io.jtag_TCK))
-<<<<<<< HEAD
     val packagePinsWithPackageIOs = Seq(
       ("F4", IOPin(io.jtag_TCK)),  //pin JD-3
       ("D2", IOPin(io.jtag_TMS)),  //pin JD-8
@@ -118,13 +105,6 @@ class JTAGDebugGeorgeFPGAPlacedOverlay(val shell: GeorgeFPGAShellBasicOverlays, 
       ("H2", IOPin(io.srst_n))
       
       )
-=======
-    val packagePinsWithPackageIOs = Seq(("F4", IOPin(io.jtag_TCK)),  //pin JD-3
-      ("D2", IOPin(io.jtag_TMS)),  //pin JD-8
-      ("E2", IOPin(io.jtag_TDI)),  //pin JD-7
-      ("D4", IOPin(io.jtag_TDO)),  //pin JD-1
-      ("H2", IOPin(io.srst_n)))
->>>>>>> cf81a93 (started working on george shell)
 
     packagePinsWithPackageIOs foreach { case (pin, io) => {
       shell.xdc.addPackagePin(io, pin)
@@ -147,7 +127,6 @@ class CTSResetGeorgeFPGAShellPlacer(val shell: GeorgeFPGAShellBasicOverlays, val
 }
 
 
-<<<<<<< HEAD
 
 case object GeorgeFPGADDRSize extends Field[BigInt](0x10000000L * 1) // 256 MB
 class DDRGeorgeFPGAPlacedOverlay(val shell: GeorgeFPGAShellBasicOverlays, name: String, val designInput: DDRDesignInput, val shellInput: DDRShellInput)
@@ -201,12 +180,6 @@ abstract class GeorgeFPGAShellBasicOverlays()(implicit p: Parameters) extends Se
   val sys_clock = Overlay(ClockInputOverlayKey, new SysClockGeorgeFPGAShellPlacer(this, ClockInputShellInput()))
   val led       = Seq.tabulate(2)(i => Overlay(LEDOverlayKey, new LEDGeorgeFPGAShellPlacer(this, LEDMetas(i))(valName = ValName(s"led_$i"))))
   val ddr       = Overlay(DDROverlayKey, new DDRGeorgeFPGAShellPlacer(this, DDRShellInput()))
-=======
-abstract class GeorgeFPGAShellBasicOverlays()(implicit p: Parameters) extends Series7Shell {
-  // Order matters; ddr depends on sys_clock
-  val sys_clock = Overlay(ClockInputOverlayKey, new SysClockGeorgeFPGAShellPlacer(this, ClockInputShellInput()))
-  val led       = Seq.tabulate(5)(i => Overlay(LEDOverlayKey, new LEDGeorgeFPGAShellPlacer(this, LEDMetas(i))(valName = ValName(s"led_$i"))))
->>>>>>> cf81a93 (started working on george shell)
   // val uart      = Overlay(UARTOverlayKey, new UARTGeorgeFPGAShellPlacer(this, UARTShellInput()))
   // val sdio      = Overlay(SPIOverlayKey, new SDIOGeorgeFPGAShellPlacer(this, SPIShellInput()))
   // val jtag      = Overlay(JTAGDebugOverlayKey, new JTAGDebugGeorgeFPGAShellPlacer(this, JTAGDebugShellInput()))
@@ -237,11 +210,7 @@ class GeorgeFPGAShell()(implicit p: Parameters) extends GeorgeFPGAShellBasicOver
     override def provideImplicitClockToLazyChildren = true
 
     val reset = IO(Input(Bool()))
-<<<<<<< HEAD
     xdc.addPackagePin(reset, "T18")
-=======
-    xdc.addPackagePin(reset, "R13")
->>>>>>> cf81a93 (started working on george shell)
     xdc.addIOStandard(reset, "LVCMOS33")
 
     val reset_ibuf = Module(new IBUF)
@@ -252,92 +221,9 @@ class GeorgeFPGAShell()(implicit p: Parameters) extends GeorgeFPGAShellBasicOver
     val powerOnReset = PowerOnResetFPGAOnly(sysclk)
     sdc.addAsyncPath(Seq(powerOnReset))
 
-<<<<<<< HEAD
     resetPin := reset_ibuf.io.O
 
     pllReset :=
       (~reset_ibuf.io.O) || powerOnReset //GeorgeFPGA is active low reset
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
-    resetPin := ~reset_ibuf.io.O
-
-    pllReset :=
-      (reset_ibuf.io.O) || powerOnReset //GeorgeFPGA is active low reset
-  }
-}
-
-// class GeorgeFPGAShellGPIOPMOD()(implicit p: Parameters) extends GeorgeFPGAShellBasicOverlays
-// //This is the Shell used for coreip arty builds, with GPIOS and trace signals on the pmods
-// {
-//   // PLL reset causes
-//   val pllReset = InModuleBody { Wire(Bool()) }
-
-//   val gpio_pmod = Overlay(GPIOPMODOverlayKey, new GPIOPMODGeorgeFPGAShellPlacer(this, GPIOPMODShellInput()))
-//   val trace_pmod = Overlay(TracePMODOverlayKey, new TracePMODGeorgeFPGAShellPlacer(this, TracePMODShellInput()))
-
-//   val topDesign = LazyModule(p(DesignKey)(designParameters))
-
-//   // Place the sys_clock at the Shell if the user didn't ask for it
-//   p(ClockInputOverlayKey).foreach(_.place(ClockInputDesignInput()))
-
-//   override lazy val module = new LazyRawModuleImp(this) {
-//     override def provideImplicitClockToLazyChildren = true
-//     val reset = IO(Input(Bool()))
-//     xdc.addBoardPin(reset, "reset")
-
-//     val reset_ibuf = Module(new IBUF)
-//     reset_ibuf.io.I := reset
-
-//     val sysclk: Clock = sys_clock.get() match {
-//       case Some(x: SysClockGeorgeFPGAPlacedOverlay) => x.clock
-//     }
-//     val powerOnReset = PowerOnResetFPGAOnly(sysclk)
-//     sdc.addAsyncPath(Seq(powerOnReset))
-//     val ctsReset: Bool = cts_reset.get() match {
-//       case Some(x: CTSResetGeorgeFPGAPlacedOverlay) => x.designInput.rst
-//       case None => false.B
-//     }
-
-//     pllReset :=
-//       (!reset_ibuf.io.O) || powerOnReset || ctsReset //GeorgeFPGA is active low reset
-//   }
-// }
-
-/*
-   Copyright 2016 SiFive, Inc.
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-*/
->>>>>>> cf81a93 (started working on george shell)
