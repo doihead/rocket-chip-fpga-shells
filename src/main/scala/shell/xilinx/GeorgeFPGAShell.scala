@@ -73,7 +73,7 @@ class UARTGeorgeFPGAShellPlacer(val shell: GeorgeFPGAShellBasicOverlays, val she
 
 //LEDS - r0, g0, b0, 2 normal leds
 object LEDGeorgeFPGAPinConstraints{
-  val pins = Seq("L16", "L18")
+  val pins = Seq("C6", "B6", "D8", "F6")
 }
 class LEDGeorgeFPGAPlacedOverlay(val shell: GeorgeFPGAShellBasicOverlays, name: String, val designInput: LEDDesignInput, val shellInput: LEDShellInput)
   extends LEDXilinxPlacedOverlay(name, designInput, shellInput, packagePin = Some(LEDGeorgeFPGAPinConstraints.pins(shellInput.number)))
@@ -210,7 +210,7 @@ class GeorgeFPGAShell()(implicit p: Parameters) extends GeorgeFPGAShellBasicOver
     override def provideImplicitClockToLazyChildren = true
 
     val reset = IO(Input(Bool()))
-    xdc.addPackagePin(reset, "T18")
+    xdc.addPackagePin(reset, "B2")
     xdc.addIOStandard(reset, "LVCMOS33")
 
     val reset_ibuf = Module(new IBUF)

@@ -348,7 +348,7 @@ class GeorgeFPGAMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
             <Pin VCCAUX_IO="" IOSTANDARD="DIFF_SSTL135" PADName="U9" SLEW="" name="ddr3_ck_p[0]" IN_TERM=""     />
             <Pin VCCAUX_IO="" IOSTANDARD="SSTL135" PADName="R2" SLEW="" name="ddr3_cke[0]" IN_TERM="" />
             <Pin VCCAUX_IO="" IOSTANDARD="SSTL135" PADName="N4" SLEW="" name="ddr3_cs_n[0]" IN_TERM="" />
-            <Pin VCCAUX_IO="" IOSTANDARD="SSTL135" PADName="R3" SLEW="" name="ddr3_dm[0]" IN_TERM="" />
+            <Pin VCCAUX_IO="" IOSTANDARD="SSTL135" PADName="T5" SLEW="" name="ddr3_dm[0]" IN_TERM="" />
             <Pin VCCAUX_IO="" IOSTANDARD="SSTL135" PADName="L3" SLEW="" name="ddr3_dm[1]" IN_TERM="" />
             <Pin VCCAUX_IO="" IOSTANDARD="SSTL135" PADName="V1" SLEW="" name="ddr3_dq[0]" IN_TERM="" />
             <Pin VCCAUX_IO="" IOSTANDARD="SSTL135" PADName="M2" SLEW="" name="ddr3_dq[10]" IN_TERM="" />
@@ -359,7 +359,7 @@ class GeorgeFPGAMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
             <Pin VCCAUX_IO="" IOSTANDARD="SSTL135" PADName="L5" SLEW="" name="ddr3_dq[15]" IN_TERM="" />
             <Pin VCCAUX_IO="" IOSTANDARD="SSTL135" PADName="T3" SLEW="" name="ddr3_dq[1]" IN_TERM="" />
             <Pin VCCAUX_IO="" IOSTANDARD="SSTL135" PADName="U3" SLEW="" name="ddr3_dq[2]" IN_TERM="" />
-            <Pin VCCAUX_IO="" IOSTANDARD="SSTL135" PADName="T5" SLEW="" name="ddr3_dq[3]" IN_TERM="" />
+            <Pin VCCAUX_IO="" IOSTANDARD="SSTL135" PADName="R3" SLEW="" name="ddr3_dq[3]" IN_TERM="" />
             <Pin VCCAUX_IO="" IOSTANDARD="SSTL135" PADName="U4" SLEW="" name="ddr3_dq[4]" IN_TERM="" />
             <Pin VCCAUX_IO="" IOSTANDARD="SSTL135" PADName="T4" SLEW="" name="ddr3_dq[5]" IN_TERM="" />
             <Pin VCCAUX_IO="" IOSTANDARD="SSTL135" PADName="V4" SLEW="" name="ddr3_dq[6]" IN_TERM="" />
