@@ -377,8 +377,8 @@ class GeorgeFPGAMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
         </PinSelection>
         <System_Control>
           <Pin PADName="No connect" Bank="Select Bank" name="sys_rst" />
-          <Pin PADName="No connect" Bank="Select Bank" name="init_calib_complete" />
-          <Pin PADName="No connect" Bank="Select Bank" name="tg_compare_error" />
+          <Pin PADName="U12" Bank="14" name="init_calib_complete" />
+          <Pin PADName="U11" Bank="14" name="tg_compare_error" />z
         </System_Control>
         <TimingParameters>
           <Parameters twtr="7.5" trrd="7.5" trefi="7.8" tfaw="45" trtp="7.5" tcke="5.625" trfc="160" trp="13.5" tras="36" trcd="13.5" />
