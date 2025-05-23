@@ -289,7 +289,7 @@ class GeorgeFPGAMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
       <DataDepth_En>1024</DataDepth_En>
       <LowPower_En>ON</LowPower_En>
       <XADC_En>Enabled</XADC_En>
-      <TargetFPGA>xc7a100t-csg324/-1</TargetFPGA>
+      <TargetFPGA>xc7a100ti-csg324/-1l</TargetFPGA>
       <Version>4.1</Version>
       <SystemClock>No Buffer</SystemClock>
       <ReferenceClock>No Buffer</ReferenceClock>
