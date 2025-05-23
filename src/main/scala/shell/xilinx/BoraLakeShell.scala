@@ -141,51 +141,51 @@ class CTSResetBoraLakeShellPlacer(val shell: BoraLakeShellBasicOverlays, val she
 
 
 
-// case object BoraLakeDDRSize extends Field[BigInt](0x10000000L * 1) // 256 MB
-// class DDRBoraLakePlacedOverlay(val shell: BoraLakeShellBasicOverlays, name: String, val designInput: DDRDesignInput, val shellInput: DDRShellInput)
-//   extends DDRPlacedOverlay[XilinxBoraLakeMIGPads](name, designInput, shellInput)
-// {
-//   val size = p(BoraLakeDDRSize)
+case object BoraLakeDDRSize extends Field[BigInt](0x40000000L * 4) // 4GB
+class DDRBoraLakePlacedOverlay(val shell: BoraLakeShellBasicOverlays, name: String, val designInput: DDRDesignInput, val shellInput: DDRShellInput)
+  extends DDRPlacedOverlay[XilinxBoraLakeMIGPads](name, designInput, shellInput)
+{
+  val size = p(BoraLakeDDRSize)
 
-//   val ddrClk1 = shell { ClockSinkNode(freqMHz = 166.666)}
-//   val ddrClk2 = shell { ClockSinkNode(freqMHz = 200)}
-//   val ddrGroup = shell { ClockGroup() }
-//   ddrClk1 := di.wrangler := ddrGroup := di.corePLL
-//   ddrClk2 := di.wrangler := ddrGroup
+  val ddrClk1 = shell { ClockSinkNode(freqMHz = 166.666)}
+  val ddrClk2 = shell { ClockSinkNode(freqMHz = 200)}
+  val ddrGroup = shell { ClockGroup() }
+  ddrClk1 := di.wrangler := ddrGroup := di.corePLL
+  ddrClk2 := di.wrangler := ddrGroup
   
-//   val migParams = XilinxBoraLakeMIGParams(address = AddressSet.misaligned(di.baseAddress, size))
-//   val mig = LazyModule(new XilinxBoraLakeMIG(migParams))
-//   val ddrUI     = shell { ClockSourceNode(freqMHz = 100) }
-//   val areset    = shell { ClockSinkNode(Seq(ClockSinkParameters())) }
-//   areset := di.wrangler := ddrUI
+  val migParams = XilinxBoraLakeMIGParams(address = AddressSet.misaligned(di.baseAddress, size))
+  val mig = LazyModule(new XilinxBoraLakeMIG(migParams))
+  val ddrUI     = shell { ClockSourceNode(freqMHz = 100) }
+  val areset    = shell { ClockSinkNode(Seq(ClockSinkParameters())) }
+  areset := di.wrangler := ddrUI
 
-//   def overlayOutput = DDROverlayOutput(ddr = mig.node)
-//   def ioFactory = new XilinxBoraLakeMIGPads(size)
+  def overlayOutput = DDROverlayOutput(ddr = mig.node)
+  def ioFactory = new XilinxBoraLakeMIGPads(size)
 
-//   shell { InModuleBody {
-//     require (shell.sys_clock.get.isDefined, "Use of DDRBoraLakePlacedOverlay depends on SysClockBoraLakePlacedOverlay")
-//     val (sys, _) = shell.sys_clock.get.get.overlayOutput.node.out(0)
-//     val (ui, _) = ddrUI.out(0)
-//     val (dclk1, _) = ddrClk1.in(0)
-//     val (dclk2, _) = ddrClk2.in(0)
-//     val (ar, _) = areset.in(0)
-//     val port = mig.module.io.port
+  shell { InModuleBody {
+    require (shell.sys_clock.get.isDefined, "Use of DDRBoraLakePlacedOverlay depends on SysClockBoraLakePlacedOverlay")
+    val (sys, _) = shell.sys_clock.get.get.overlayOutput.node.out(0)
+    val (ui, _) = ddrUI.out(0)
+    val (dclk1, _) = ddrClk1.in(0)
+    val (dclk2, _) = ddrClk2.in(0)
+    val (ar, _) = areset.in(0)
+    val port = mig.module.io.port
     
-//     io <> port.viewAsSupertype(new XilinxBoraLakeMIGPads(mig.depth))
-//     ui.clock := port.ui_clk
-//     ui.reset := !port.mmcm_locked || port.ui_clk_sync_rst
-//     port.sys_clk_i := dclk1.clock.asUInt
-//     port.clk_ref_i := dclk2.clock.asUInt
-//     port.sys_rst := shell.pllReset
-//     port.aresetn := !(ar.reset.asBool)
-//   } }
+    io <> port.viewAsSupertype(new XilinxBoraLakeMIGPads(mig.depth))
+    ui.clock := port.ui_clk
+    ui.reset := !port.mmcm_locked || port.ui_clk_sync_rst
+    port.sys_clk_i := dclk1.clock.asUInt
+    port.clk_ref_i := dclk2.clock.asUInt
+    port.sys_rst := shell.pllReset
+    port.aresetn := !(ar.reset.asBool)
+  } }
 
-//   shell.sdc.addGroup(clocks = Seq("clk_pll_i"), pins = Seq(mig.island.module.blackbox.io.ui_clk))
-// }
-// class DDRBoraLakeShellPlacer(val shell: BoraLakeShellBasicOverlays, val shellInput: DDRShellInput)(implicit val valName: ValName)
-//   extends DDRShellPlacer[BoraLakeShellBasicOverlays] {
-//   def place(designInput: DDRDesignInput) = new DDRBoraLakePlacedOverlay(shell, valName.name, designInput, shellInput)
-// }
+  shell.sdc.addGroup(clocks = Seq("clk_pll_i"), pins = Seq(mig.island.module.blackbox.io.ui_clk))
+}
+class DDRBoraLakeShellPlacer(val shell: BoraLakeShellBasicOverlays, val shellInput: DDRShellInput)(implicit val valName: ValName)
+  extends DDRShellPlacer[BoraLakeShellBasicOverlays] {
+  def place(designInput: DDRDesignInput) = new DDRBoraLakePlacedOverlay(shell, valName.name, designInput, shellInput)
+}
 
 
 abstract class BoraLakeShellBasicOverlays()(implicit p: Parameters) extends Series7Shell {
@@ -193,7 +193,7 @@ abstract class BoraLakeShellBasicOverlays()(implicit p: Parameters) extends Seri
   val sys_clock = Overlay(ClockInputOverlayKey, new SysClockBoraLakeShellPlacer(this, ClockInputShellInput()))
   val led       = Seq.tabulate(6)(i => Overlay(LEDOverlayKey, new LEDBoraLakeShellPlacer(this, LEDMetas(i))(valName = ValName(s"led_$i"))))
   val button    = Seq.tabulate(5)(i => Overlay(ButtonOverlayKey, new ButtonBoraLakeShellPlacer(this, ButtonShellInput(number = i))(valName = ValName(s"button_$i"))))
-  // val ddr       = Overlay(DDROverlayKey, new DDRBoraLakeShellPlacer(this, DDRShellInput()))
+  val ddr       = Overlay(DDROverlayKey, new DDRBoraLakeShellPlacer(this, DDRShellInput()))
 
 
   // val uart      = Overlay(UARTOverlayKey, new UARTBoraLakeShellPlacer(this, UARTShellInput()))
