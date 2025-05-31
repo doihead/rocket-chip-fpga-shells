@@ -26,51 +26,6 @@ class SysClockGeorgeFPGAShellPlacer(val shell: GeorgeFPGAShellBasicOverlays, val
   def place(designInput: ClockInputDesignInput) = new SysClockGeorgeFPGAPlacedOverlay(shell, valName.name, designInput, shellInput)
 }
 
-class SPIFlashGeorgeFPGAPlacedOverlay(val shell: GeorgeFPGAShellBasicOverlays, name: String, val designInput: SPIFlashDesignInput, val shellInput: SPIFlashShellInput)
-  extends SPIFlashXilinxPlacedOverlay(name, designInput, shellInput)
-{
-
-  shell { InModuleBody {
-    val packagePinsWithPackageIOs = Seq(("D12", IOPin(io.qspi_sck)),
-      ("B11", IOPin(io.qspi_cs)),
-      ("A11", IOPin(io.qspi_dq(0))),
-      ("D13", IOPin(io.qspi_dq(1))),
-      ("B18", IOPin(io.qspi_dq(2))),
-      ("G13", IOPin(io.qspi_dq(3))))
-
-    packagePinsWithPackageIOs foreach { case (pin, io) => {
-      shell.xdc.addPackagePin(io, pin)
-      shell.xdc.addIOStandard(io, "LVCMOS33")
-    } }
-    packagePinsWithPackageIOs drop 1 foreach { case (pin, io) => {
-      shell.xdc.addPullup(io)
-    } }
-  } }
-}
-class SPIFlashGeorgeFPGAShellPlacer(val shell: GeorgeFPGAShellBasicOverlays, val shellInput: SPIFlashShellInput)(implicit val valName: ValName)
-  extends SPIFlashShellPlacer[GeorgeFPGAShellBasicOverlays] {
-  def place(designInput: SPIFlashDesignInput) = new SPIFlashGeorgeFPGAPlacedOverlay(shell, valName.name, designInput, shellInput)
-}
-
-class UARTGeorgeFPGAPlacedOverlay(val shell: GeorgeFPGAShellBasicOverlays, name: String, val designInput: UARTDesignInput, val shellInput: UARTShellInput)
-  extends UARTXilinxPlacedOverlay(name, designInput, shellInput, false)
-{
-  shell { InModuleBody {
-    val packagePinsWithPackageIOs = Seq(("A9", IOPin(io.rxd)),
-      ("D10", IOPin(io.txd)))
-
-    packagePinsWithPackageIOs foreach { case (pin, io) => {
-      shell.xdc.addPackagePin(io, pin)
-      shell.xdc.addIOStandard(io, "LVCMOS33")
-      shell.xdc.addIOB(io)
-    } }
-  } }
-}
-class UARTGeorgeFPGAShellPlacer(val shell: GeorgeFPGAShellBasicOverlays, val shellInput: UARTShellInput)(implicit val valName: ValName)
-  extends UARTShellPlacer[GeorgeFPGAShellBasicOverlays] {
-  def place(designInput: UARTDesignInput) = new UARTGeorgeFPGAPlacedOverlay(shell, valName.name, designInput, shellInput)
-}
-
 //LEDS - r0, g0, b0, 2 normal leds
 object LEDGeorgeFPGAPinConstraints{
   val pins = Seq("C6", "B6", "D8", "F6")
@@ -82,41 +37,6 @@ class LEDGeorgeFPGAShellPlacer(val shell: GeorgeFPGAShellBasicOverlays, val shel
   def place(designInput: LEDDesignInput) = new LEDGeorgeFPGAPlacedOverlay(shell, valName.name, designInput, shellInput)
 }
 
-class JTAGDebugBScanGeorgeFPGAPlacedOverlay(val shell: GeorgeFPGAShellBasicOverlays, name: String, val designInput: JTAGDebugBScanDesignInput, val shellInput: JTAGDebugBScanShellInput)
- extends JTAGDebugBScanXilinxPlacedOverlay(name, designInput, shellInput)
-class JTAGDebugBScanGeorgeFPGAShellPlacer(val shell: GeorgeFPGAShellBasicOverlays, val shellInput: JTAGDebugBScanShellInput)(implicit val valName: ValName)
-  extends JTAGDebugBScanShellPlacer[GeorgeFPGAShellBasicOverlays] {
-  def place(designInput: JTAGDebugBScanDesignInput) = new JTAGDebugBScanGeorgeFPGAPlacedOverlay(shell, valName.name, designInput, shellInput)
-}
-
-// PMOD JD used for JTAG
-class JTAGDebugGeorgeFPGAPlacedOverlay(val shell: GeorgeFPGAShellBasicOverlays, name: String, val designInput: JTAGDebugDesignInput, val shellInput: JTAGDebugShellInput)
-  extends JTAGDebugXilinxPlacedOverlay(name, designInput, shellInput)
-{
-  shell { InModuleBody {
-    shell.sdc.addClock("JTCK", IOPin(io.jtag_TCK), 10)
-    shell.sdc.addGroup(clocks = Seq("JTCK"))
-    shell.xdc.clockDedicatedRouteFalse(IOPin(io.jtag_TCK))
-    val packagePinsWithPackageIOs = Seq(
-      ("F4", IOPin(io.jtag_TCK)),  //pin JD-3
-      ("D2", IOPin(io.jtag_TMS)),  //pin JD-8
-      ("E2", IOPin(io.jtag_TDI)),  //pin JD-7
-      ("D4", IOPin(io.jtag_TDO)),  //pin JD-1
-      ("H2", IOPin(io.srst_n))
-      
-      )
-
-    packagePinsWithPackageIOs foreach { case (pin, io) => {
-      shell.xdc.addPackagePin(io, pin)
-      shell.xdc.addIOStandard(io, "LVCMOS33")
-      shell.xdc.addPullup(io)
-    } }
-  } }
-}
-class JTAGDebugGeorgeFPGAShellPlacer(val shell: GeorgeFPGAShellBasicOverlays, val shellInput: JTAGDebugShellInput)(implicit val valName: ValName)
-  extends JTAGDebugShellPlacer[GeorgeFPGAShellBasicOverlays] {
-  def place(designInput: JTAGDebugDesignInput) = new JTAGDebugGeorgeFPGAPlacedOverlay(shell, valName.name, designInput, shellInput)
-}
 
 //Core to shell external resets
 class CTSResetGeorgeFPGAPlacedOverlay(val shell: GeorgeFPGAShellBasicOverlays, name: String, val designInput: CTSResetDesignInput, val shellInput: CTSResetShellInput)
@@ -180,13 +100,7 @@ abstract class GeorgeFPGAShellBasicOverlays()(implicit p: Parameters) extends Se
   val sys_clock = Overlay(ClockInputOverlayKey, new SysClockGeorgeFPGAShellPlacer(this, ClockInputShellInput()))
   val led       = Seq.tabulate(2)(i => Overlay(LEDOverlayKey, new LEDGeorgeFPGAShellPlacer(this, LEDMetas(i))(valName = ValName(s"led_$i"))))
   val ddr       = Overlay(DDROverlayKey, new DDRGeorgeFPGAShellPlacer(this, DDRShellInput()))
-  // val uart      = Overlay(UARTOverlayKey, new UARTGeorgeFPGAShellPlacer(this, UARTShellInput()))
-  // val sdio      = Overlay(SPIOverlayKey, new SDIOGeorgeFPGAShellPlacer(this, SPIShellInput()))
-  // val jtag      = Overlay(JTAGDebugOverlayKey, new JTAGDebugGeorgeFPGAShellPlacer(this, JTAGDebugShellInput()))
-  // val cjtag     = Overlay(cJTAGDebugOverlayKey, new cJTAGDebugGeorgeFPGAShellPlacer(this, cJTAGDebugShellInput()))
-  // val spi_flash = Overlay(SPIFlashOverlayKey, new SPIFlashGeorgeFPGAShellPlacer(this, SPIFlashShellInput()))
   val cts_reset = Overlay(CTSResetOverlayKey, new CTSResetGeorgeFPGAShellPlacer(this, CTSResetShellInput()))
-  // val jtagBScan = Overlay(JTAGDebugBScanOverlayKey, new JTAGDebugBScanGeorgeFPGAShellPlacer(this, JTAGDebugBScanShellInput()))
 
   def LEDMetas(i: Int): LEDShellInput =
     LEDShellInput(

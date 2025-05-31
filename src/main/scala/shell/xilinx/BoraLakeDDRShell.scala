@@ -234,7 +234,7 @@ class BoraLakeMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
     //axi_s
     //slave interface write address ports
     val s_axi_awid            = Input(Bits(4.W))
-    val s_axi_awaddr          = Input(Bits(if(depth<=0x40000000) 30.W else 32.W))
+    val s_axi_awaddr          = Input(Bits(if(depth<=0x40000000L) 30.W else 32.W))
     val s_axi_awlen           = Input(Bits(8.W))
     val s_axi_awsize          = Input(Bits(3.W))
     val s_axi_awburst         = Input(Bits(2.W))
@@ -257,7 +257,7 @@ class BoraLakeMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
     val s_axi_bvalid          = Output(Bool())
     //slave interface read address ports
     val s_axi_arid            = Input(Bits(4.W))
-    val s_axi_araddr          = Input(Bits(if(depth<=0x40000000) 30.W else 32.W))
+    val s_axi_araddr          = Input(Bits(if(depth<=0x40000000L) 30.W else 32.W))
     val s_axi_arlen           = Input(Bits(8.W))
     val s_axi_arsize          = Input(Bits(3.W))
     val s_axi_arburst         = Input(Bits(2.W))
