@@ -293,7 +293,7 @@ class BoraLakeMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
     <Version>4.2</Version>
     <SystemClock>No Buffer</SystemClock>
     <ReferenceClock>No Buffer</ReferenceClock>
-    <SysResetPolarity>ACTIVE LOW</SysResetPolarity>
+    <SysResetPolarity>ACTIVE HIGH</SysResetPolarity>
     <BankSelectionFlag>FALSE</BankSelectionFlag>
     <InternalVref>0</InternalVref>
     <dci_hr_inouts_inputs>50 Ohms</dci_hr_inouts_inputs>

@@ -37,7 +37,8 @@ class SPIFlashBoraLakePlacedOverlay(val shell: BoraLakeShellBasicOverlays, name:
       ("B24", IOPin(io.qspi_dq(0))),
       ("A25", IOPin(io.qspi_dq(1))),
       ("B22", IOPin(io.qspi_dq(2))),
-      ("A22", IOPin(io.qspi_dq(3))))
+      // ("A22", IOPin(io.qspi_dq(3))))
+      ("B25", IOPin(io.qspi_dq(3))))
 
     packagePinsWithPackageIOs foreach { case (pin, io) => {
       shell.xdc.addPackagePin(io, pin)
@@ -58,8 +59,8 @@ class UARTBoraLakePlacedOverlay(val shell: BoraLakeShellBasicOverlays, name: Str
 {
   shell { InModuleBody {
     val packagePinsWithPackageIOs = Seq(
-      ("A24", IOPin(io.rxd)),
-      ("A23", IOPin(io.txd)))
+      ("A23", IOPin(io.rxd)),
+      ("A24", IOPin(io.txd)))
 
     packagePinsWithPackageIOs foreach { case (pin, io) => {
       shell.xdc.addPackagePin(io, pin)
@@ -75,7 +76,7 @@ class UARTBoraLakeShellPlacer(val shell: BoraLakeShellBasicOverlays, val shellIn
 
 //LEDS - r0, g0, b0, 2 normal leds
 object LEDBoraLakePinConstraints{
-  val pins = Seq("F23", "E22", "D24", "D23", "G22", "E21")
+  val pins = Seq("D24", "D23", "F23", "E22", "G22", "E21", "A22")
 }
 class LEDBoraLakePlacedOverlay(val shell: BoraLakeShellBasicOverlays, name: String, val designInput: LEDDesignInput, val shellInput: LEDShellInput)
   extends LEDXilinxPlacedOverlay(name, designInput, shellInput, packagePin = Some(LEDBoraLakePinConstraints.pins(shellInput.number)))
@@ -191,7 +192,7 @@ class DDRBoraLakeShellPlacer(val shell: BoraLakeShellBasicOverlays, val shellInp
 abstract class BoraLakeShellBasicOverlays()(implicit p: Parameters) extends Series7Shell {
   // Order matters; ddr depends on sys_clock
   val sys_clock = Overlay(ClockInputOverlayKey, new SysClockBoraLakeShellPlacer(this, ClockInputShellInput()))
-  val led       = Seq.tabulate(6)(i => Overlay(LEDOverlayKey, new LEDBoraLakeShellPlacer(this, LEDMetas(i))(valName = ValName(s"led_$i"))))
+  val led       = Seq.tabulate(7)(i => Overlay(LEDOverlayKey, new LEDBoraLakeShellPlacer(this, LEDMetas(i))(valName = ValName(s"led_$i"))))
   val button    = Seq.tabulate(5)(i => Overlay(ButtonOverlayKey, new ButtonBoraLakeShellPlacer(this, ButtonShellInput(number = i))(valName = ValName(s"button_$i"))))
   val ddr       = Overlay(DDROverlayKey, new DDRBoraLakeShellPlacer(this, DDRShellInput()))
 
