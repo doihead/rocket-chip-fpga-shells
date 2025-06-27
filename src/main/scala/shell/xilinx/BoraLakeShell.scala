@@ -96,6 +96,7 @@ class DDRBoraLakePlacedOverlay(val shell: BoraLakeShellBasicOverlays, name: Stri
     
     io <> port.viewAsSupertype(new XilinxBoraLakeMIGPads(mig.depth))
     ui.clock := port.ui_clk
+    // ui.reset := !port.mmcm_locked || port.ui_clk_sync_rst
     ui.reset := ~(!port.mmcm_locked || port.ui_clk_sync_rst)
     port.sys_clk_i := dclk1.clock.asUInt
     port.clk_ref_i := dclk2.clock.asUInt
@@ -146,16 +147,16 @@ class BoraLakeShell()(implicit p: Parameters) extends BoraLakeShellBasicOverlays
     xdc.addIOStandard(reset, "LVCMOS33")
 
     val reset_ibuf = Module(new IBUF)
-    reset_ibuf.io.I := reset
+    reset_ibuf.io.I := ~reset
     val sysclk: Clock = sys_clock.get() match {
       case Some(x: SysClockBoraLakePlacedOverlay) => x.clock
     }
     val powerOnReset = PowerOnResetFPGAOnly(sysclk)
     sdc.addAsyncPath(Seq(powerOnReset))
 
-    resetPin := ~reset_ibuf.io.O
+    resetPin := reset_ibuf.io.O
 
     pllReset :=
-      (reset_ibuf.io.O) || powerOnReset //BoraLake is active low reset
+      (~reset_ibuf.io.O) || powerOnReset //BoraLake is active low reset
   }
 }

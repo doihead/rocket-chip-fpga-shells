@@ -185,6 +185,7 @@ class XilinxBoraLakeMIG(c : XilinxBoraLakeMIGParams, crossing: ClockCrossingType
 class BoraLakeMIGIODDR(depth : BigInt) extends Bundle {
   require((depth<=0x100000000L),"BoraLakeMIGIODDR supports upto 4GB depth configuraton")
   val ddr3_addr             = Output(Bits(if(depth<=0x40000000L) 14.W else 16.W))
+  // val ddr3_addr             = Output(Bits(14.W))
   val ddr3_ba               = Output(Bits(3.W))
   val ddr3_ras_n            = Output(Bool())
   val ddr3_cas_n            = Output(Bool())
@@ -235,6 +236,7 @@ class BoraLakeMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
     //slave interface write address ports
     val s_axi_awid            = Input(Bits(4.W))
     val s_axi_awaddr          = Input(Bits(if(depth<=0x40000000L) 30.W else 32.W))
+    // val s_axi_awaddr          = Input(Bits(30.W))
     val s_axi_awlen           = Input(Bits(8.W))
     val s_axi_awsize          = Input(Bits(3.W))
     val s_axi_awburst         = Input(Bits(2.W))
@@ -258,6 +260,7 @@ class BoraLakeMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
     //slave interface read address ports
     val s_axi_arid            = Input(Bits(4.W))
     val s_axi_araddr          = Input(Bits(if(depth<=0x40000000L) 30.W else 32.W))
+    // val s_axi_araddr          = Input(Bits(30.W))
     val s_axi_arlen           = Input(Bits(8.W))
     val s_axi_arsize          = Input(Bits(3.W))
     val s_axi_arburst         = Input(Bits(2.W))
@@ -302,13 +305,13 @@ class BoraLakeMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
         <selected>7k/xc7k160t-ffg676</selected>
     </FPGADevice>
     <Controller number="0">
-        <MemoryDevice>DDR3_SDRAM/SODIMMs/MT8KTF51264HZ-1G9</MemoryDevice>
-        <TimePeriod>1250</TimePeriod>
-        <VccAuxIO>2.0V</VccAuxIO>
+        <MemoryDevice>DDR3_SDRAM/SODIMMs/MT8KTF51264HZ-1G6</MemoryDevice>
+        <TimePeriod>3000</TimePeriod>
+        <VccAuxIO>1.8V</VccAuxIO>
         <PHYRatio>4:1</PHYRatio>
-        <InputClkFreq>200</InputClkFreq>
+        <InputClkFreq>166.666</InputClkFreq>
         <UIExtraClocks>0</UIExtraClocks>
-        <MMCM_VCO>800</MMCM_VCO>
+        <MMCM_VCO>666</MMCM_VCO>
         <MMCMClkOut0> 1.000</MMCMClkOut0>
         <MMCMClkOut1>1</MMCMClkOut1>
         <MMCMClkOut2>1</MMCMClkOut2>
@@ -328,155 +331,155 @@ class BoraLakeMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
         <MemoryVoltage>1.35V</MemoryVoltage>
         <UserMemoryAddressMap>BANK_ROW_COLUMN</UserMemoryAddressMap>
         <PinSelection>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AF7" SLEW="" VCCAUX_IO="HIGH" name="ddr3_addr[0]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="Y11" SLEW="" VCCAUX_IO="HIGH" name="ddr3_addr[10]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AB12" SLEW="" VCCAUX_IO="HIGH" name="ddr3_addr[11]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="Y13" SLEW="" VCCAUX_IO="HIGH" name="ddr3_addr[12]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="Y8" SLEW="" VCCAUX_IO="HIGH" name="ddr3_addr[13]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AF7" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_addr[0]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="Y11" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_addr[10]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AB12" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_addr[11]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="Y13" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_addr[12]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="Y8" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_addr[13]"/>
             <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AC12" SLEW="" VCCAUX_IO="HIGH" name="ddr3_addr[14]"/>
             <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AC13" SLEW="" VCCAUX_IO="HIGH" name="ddr3_addr[15]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AA9" SLEW="" VCCAUX_IO="HIGH" name="ddr3_addr[1]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AE7" SLEW="" VCCAUX_IO="HIGH" name="ddr3_addr[2]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AB9" SLEW="" VCCAUX_IO="HIGH" name="ddr3_addr[3]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AD8" SLEW="" VCCAUX_IO="HIGH" name="ddr3_addr[4]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AB10" SLEW="" VCCAUX_IO="HIGH" name="ddr3_addr[5]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AD9" SLEW="" VCCAUX_IO="HIGH" name="ddr3_addr[6]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AC9" SLEW="" VCCAUX_IO="HIGH" name="ddr3_addr[7]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AA12" SLEW="" VCCAUX_IO="HIGH" name="ddr3_addr[8]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AA13" SLEW="" VCCAUX_IO="HIGH" name="ddr3_addr[9]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="W10" SLEW="" VCCAUX_IO="HIGH" name="ddr3_ba[0]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AC7" SLEW="" VCCAUX_IO="HIGH" name="ddr3_ba[1]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="W9" SLEW="" VCCAUX_IO="HIGH" name="ddr3_ba[2]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AA10" SLEW="" VCCAUX_IO="HIGH" name="ddr3_cas_n"/>
-            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135" PADName="W11" SLEW="" VCCAUX_IO="HIGH" name="ddr3_ck_n[0]"/>
-            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135" PADName="V11" SLEW="" VCCAUX_IO="HIGH" name="ddr3_ck_p[0]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="V9" SLEW="" VCCAUX_IO="HIGH" name="ddr3_cke[0]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AA8" SLEW="" VCCAUX_IO="HIGH" name="ddr3_cs_n[0]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="W16" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dm[0]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AD19" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dm[1]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AE15" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dm[2]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AB15" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dm[3]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AF3" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dm[4]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AD6" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dm[5]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="W1" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dm[6]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="W3" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dm[7]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V19" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[0]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AC18" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[10]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AD18" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[11]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AA20" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[12]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AA19" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[13]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AC17" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[14]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AB17" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[15]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AF20" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[16]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AF19" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[17]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AE17" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[18]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AF17" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[19]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V16" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[1]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AD16" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[20]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AF15" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[21]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AF14" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[22]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AD15" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[23]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AB16" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[24]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AA15" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[25]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AA14" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[26]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AB14" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[27]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AA18" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[28]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AA17" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[29]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="Y17" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[2]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AD14" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[30]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AC14" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[31]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AE5" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[32]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AE3" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[33]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AD1" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[34]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AE1" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[35]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AD4" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[36]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AE6" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[37]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AF2" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[38]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AE2" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[39]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V14" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[3]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AB6" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[40]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AA4" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[41]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AC3" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[42]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AC4" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[43]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="Y6" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[44]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="Y5" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[45]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AC6" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[46]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AB4" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[47]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AC2" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[48]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AB2" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[49]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V17" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[4]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="Y2" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[50]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="Y1" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[51]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AA3" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[52]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="Y3" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[53]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V1" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[54]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V2" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[55]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="U5" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[56]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V6" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[57]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V3" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[58]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="U1" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[59]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V18" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[5]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="U7" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[60]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="U6" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[61]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="U2" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[62]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V4" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[63]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="W15" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[6]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="W14" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[7]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AB19" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[8]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AC19" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dq[9]"/>
-            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="W19" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dqs_n[0]"/>
-            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AE20" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dqs_n[1]"/>
-            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AF18" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dqs_n[2]"/>
-            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="Y16" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dqs_n[3]"/>
-            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AF4" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dqs_n[4]"/>
-            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AB5" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dqs_n[5]"/>
-            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AC1" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dqs_n[6]"/>
-            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="W5" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dqs_n[7]"/>
-            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="W18" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dqs_p[0]"/>
-            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AD20" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dqs_p[1]"/>
-            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AE18" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dqs_p[2]"/>
-            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="Y15" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dqs_p[3]"/>
-            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AF5" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dqs_p[4]"/>
-            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AA5" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dqs_p[5]"/>
-            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AB1" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dqs_p[6]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AA9" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_addr[1]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AE7" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_addr[2]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AB9" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_addr[3]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AD8" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_addr[4]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AB10" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_addr[5]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AD9" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_addr[6]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AC9" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_addr[7]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AA12" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_addr[8]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AA13" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_addr[9]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="W10" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_ba[0]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AC7" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_ba[1]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="W9" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_ba[2]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AA10" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_cas_n"/>
+            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135" PADName="W11" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_ck_n[0]"/>
+            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135" PADName="V11" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_ck_p[0]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="V9" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_cke[0]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AA8" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_cs_n[0]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="W16" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dm[0]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AD19" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dm[1]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AE15" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dm[2]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AB15" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dm[3]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AF3" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dm[4]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AD6" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dm[5]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="W1" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dm[6]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="W3" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dm[7]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V19" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[0]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AC18" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[10]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AD18" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[11]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AA20" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[12]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AA19" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[13]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AC17" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[14]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AB17" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[15]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AF20" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[16]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AF19" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[17]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AE17" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[18]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AF17" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[19]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V16" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[1]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AD16" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[20]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AF15" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[21]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AF14" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[22]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AD15" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[23]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AB16" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[24]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AA15" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[25]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AA14" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[26]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AB14" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[27]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AA18" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[28]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AA17" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[29]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="Y17" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[2]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AD14" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[30]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AC14" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[31]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AE5" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[32]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AE3" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[33]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AD1" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[34]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AE1" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[35]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AD4" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[36]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AE6" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[37]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AF2" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[38]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AE2" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[39]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V14" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[3]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AB6" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[40]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AA4" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[41]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AC3" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[42]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AC4" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[43]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="Y6" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[44]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="Y5" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[45]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AC6" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[46]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AB4" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[47]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AC2" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[48]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AB2" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[49]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V17" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[4]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="Y2" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[50]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="Y1" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[51]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AA3" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[52]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="Y3" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[53]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V1" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[54]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V2" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[55]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="U5" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[56]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V6" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[57]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V3" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[58]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="U1" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[59]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V18" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[5]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="U7" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[60]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="U6" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[61]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="U2" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[62]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="V4" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[63]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="W15" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[6]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="W14" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[7]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AB19" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[8]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135_T_DCI" PADName="AC19" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dq[9]"/>
+            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="W19" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dqs_n[0]"/>
+            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AE20" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dqs_n[1]"/>
+            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AF18" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dqs_n[2]"/>
+            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="Y16" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dqs_n[3]"/>
+            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AF4" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dqs_n[4]"/>
+            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AB5" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dqs_n[5]"/>
+            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AC1" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dqs_n[6]"/>
+            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="W5" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dqs_n[7]"/>
+            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="W18" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dqs_p[0]"/>
+            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AD20" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dqs_p[1]"/>
+            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AE18" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dqs_p[2]"/>
+            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="Y15" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dqs_p[3]"/>
+            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AF5" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dqs_p[4]"/>
+            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AA5" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dqs_p[5]"/>
+            <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="AB1" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_dqs_p[6]"/>
             <Pin IN_TERM="" IOSTANDARD="DIFF_SSTL135_T_DCI" PADName="W6" SLEW="" VCCAUX_IO="HIGH" name="ddr3_dqs_p[7]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AA7" SLEW="" VCCAUX_IO="HIGH" name="ddr3_odt[0]"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AB7" SLEW="" VCCAUX_IO="HIGH" name="ddr3_ras_n"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AE13" SLEW="" VCCAUX_IO="HIGH" name="ddr3_reset_n"/>
-            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="Y10" SLEW="" VCCAUX_IO="HIGH" name="ddr3_we_n"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AA7" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_odt[0]"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AB7" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_ras_n"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="AE13" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_reset_n"/>
+            <Pin IN_TERM="" IOSTANDARD="SSTL135" PADName="Y10" SLEW="FAST" VCCAUX_IO="HIGH" name="ddr3_we_n"/>
         </PinSelection>
         <System_Control>
-        <Pin Bank="Select Bank" PADName="No connect" name="sys_rst"/>
-        <Pin Bank="Select Bank" PADName="No connect" name="init_calib_complete"/>
-        <Pin Bank="Select Bank" PADName="No connect" name="tg_compare_error"/>
+          <Pin Bank="Select Bank" PADName="No connect" name="sys_rst"/>
+          <Pin Bank="Select Bank" PADName="No connect" name="init_calib_complete"/>
+          <Pin Bank="Select Bank" PADName="No connect" name="tg_compare_error"/>
         </System_Control>
         <TimingParameters>
-        <Parameters tcke="5" tfaw="27" tras="34" trcd="13.91" trefi="7.8" trfc="260" trp="13.91" trrd="5" trtp="7.5" twtr="7.5"/>
+          <Parameters twtr="7.5" trrd="6" trefi="7.8" tfaw="30" trtp="7.5" tcke="5" trfc="110" trp="13.75" tras="35" trcd="13.75" />
         </TimingParameters>
-        <mrBurstLength name="Burst Length">8 - Fixed</mrBurstLength>
-        <mrBurstType name="Read Burst Type and Length">Sequential</mrBurstType>
-        <mrCasLatency name="CAS Latency">11</mrCasLatency>
-        <mrMode name="Mode">Normal</mrMode>
-        <mrDllReset name="DLL Reset">No</mrDllReset>
-        <mrPdMode name="DLL control for precharge PD">Slow Exit</mrPdMode>
-        <emrDllEnable name="DLL Enable">Enable</emrDllEnable>
-        <emrOutputDriveStrength name="Output Driver Impedance Control">RZQ/7</emrOutputDriveStrength>
-        <emrMirrorSelection name="Address Mirroring">Disable</emrMirrorSelection>
-        <emrCSSelection name="Controller Chip Select Pin">Enable</emrCSSelection>
-        <emrRTT name="RTT (nominal) - On Die Termination (ODT)">RZQ/4</emrRTT>
-        <emrPosted name="Additive Latency (AL)">0</emrPosted>
-        <emrOCD name="Write Leveling Enable">Disabled</emrOCD>
-        <emrDQS name="TDQS enable">Enabled</emrDQS>
-        <emrRDQS name="Qoff">Output Buffer Enabled</emrRDQS>
-        <mr2PartialArraySelfRefresh name="Partial-Array Self Refresh">Full Array</mr2PartialArraySelfRefresh>
-        <mr2CasWriteLatency name="CAS write latency">8</mr2CasWriteLatency>
-        <mr2AutoSelfRefresh name="Auto Self Refresh">Enabled</mr2AutoSelfRefresh>
-        <mr2SelfRefreshTempRange name="High Temparature Self Refresh Rate">Normal</mr2SelfRefreshTempRange>
-        <mr2RTTWR name="RTT_WR - Dynamic On Die Termination (ODT)">Dynamic ODT off</mr2RTTWR>
+        <mrBurstLength name="Burst Length" >8 - Fixed</mrBurstLength>
+        <mrBurstType name="Read Burst Type and Length" >Sequential</mrBurstType>
+        <mrCasLatency name="CAS Latency" >11</mrCasLatency>
+        <mrMode name="Mode" >Normal</mrMode>
+        <mrDllReset name="DLL Reset" >No</mrDllReset>
+        <mrPdMode name="DLL control for precharge PD" >Slow Exit</mrPdMode>
+        <emrDllEnable name="DLL Enable" >Enable</emrDllEnable>
+        <emrOutputDriveStrength name="Output Driver Impedance Control" >RZQ/7</emrOutputDriveStrength>
+        <emrMirrorSelection name="Address Mirroring" >Disable</emrMirrorSelection>
+        <emrCSSelection name="Controller Chip Select Pin" >Enable</emrCSSelection>
+        <emrRTT name="RTT (nominal) - On Die Termination (ODT)" >RZQ/6</emrRTT>
+        <emrPosted name="Additive Latency (AL)" >0</emrPosted>
+        <emrOCD name="Write Leveling Enable" >Disabled</emrOCD>
+        <emrDQS name="TDQS enable" >Enabled</emrDQS>
+        <emrRDQS name="Qoff" >Output Buffer Enabled</emrRDQS>
+        <mr2PartialArraySelfRefresh name="Partial-Array Self Refresh" >Full Array</mr2PartialArraySelfRefresh>
+        <mr2CasWriteLatency name="CAS write latency" >8</mr2CasWriteLatency>
+        <mr2AutoSelfRefresh name="Auto Self Refresh" >Enabled</mr2AutoSelfRefresh>
+        <mr2SelfRefreshTempRange name="High Temparature Self Refresh Rate" >Normal</mr2SelfRefreshTempRange>
+        <mr2RTTWR name="RTT_WR - Dynamic On Die Termination (ODT)" >Dynamic ODT off</mr2RTTWR>
         <PortInterface>AXI</PortInterface>
         <AXIParameters>
             <C0_C_RD_WR_ARB_ALGORITHM>RD_PRI_REG</C0_C_RD_WR_ARB_ALGORITHM>
-            <C0_S_AXI_ADDR_WIDTH>32</C0_S_AXI_ADDR_WIDTH>
+            <C0_S_AXI_ADDR_WIDTH>30</C0_S_AXI_ADDR_WIDTH>
             <C0_S_AXI_DATA_WIDTH>64</C0_S_AXI_DATA_WIDTH>
             <C0_S_AXI_ID_WIDTH>4</C0_S_AXI_ID_WIDTH>
             <C0_S_AXI_SUPPORTS_NARROW_BURST>0</C0_S_AXI_SUPPORTS_NARROW_BURST>
