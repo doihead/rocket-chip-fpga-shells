@@ -97,7 +97,7 @@ class DDRBoraLakePlacedOverlay(val shell: BoraLakeShellBasicOverlays, name: Stri
     io <> port.viewAsSupertype(new XilinxBoraLakeMIGPads(mig.depth))
     ui.clock := port.ui_clk
     // ui.reset := !port.mmcm_locked || port.ui_clk_sync_rst
-    ui.reset := ~(!port.mmcm_locked || port.ui_clk_sync_rst)
+    ui.reset := !port.mmcm_locked || !port.ui_clk_sync_rst // ui_clk_sync_rst is flipped for it to work
     port.sys_clk_i := dclk1.clock.asUInt
     port.clk_ref_i := dclk2.clock.asUInt
     port.sys_rst := shell.pllReset
@@ -157,6 +157,6 @@ class BoraLakeShell()(implicit p: Parameters) extends BoraLakeShellBasicOverlays
     resetPin := reset_ibuf.io.O
 
     pllReset :=
-      (~reset_ibuf.io.O) || powerOnReset //BoraLake is active low reset
+      (~reset_ibuf.io.O) || powerOnReset //BoraLake is not active low reset
   }
 }

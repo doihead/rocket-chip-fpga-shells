@@ -184,8 +184,7 @@ class XilinxBoraLakeMIG(c : XilinxBoraLakeMIGParams, crossing: ClockCrossingType
 // Black Box
 class BoraLakeMIGIODDR(depth : BigInt) extends Bundle {
   require((depth<=0x100000000L),"BoraLakeMIGIODDR supports upto 4GB depth configuraton")
-  val ddr3_addr             = Output(Bits(if(depth<=0x40000000L) 14.W else 16.W))
-  // val ddr3_addr             = Output(Bits(14.W))
+  val ddr3_addr             = Output(Bits(16.W))
   val ddr3_ba               = Output(Bits(3.W))
   val ddr3_ras_n            = Output(Bool())
   val ddr3_cas_n            = Output(Bool())
@@ -235,8 +234,7 @@ class BoraLakeMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
     //axi_s
     //slave interface write address ports
     val s_axi_awid            = Input(Bits(4.W))
-    val s_axi_awaddr          = Input(Bits(if(depth<=0x40000000L) 30.W else 32.W))
-    // val s_axi_awaddr          = Input(Bits(30.W))
+    val s_axi_awaddr          = Input(Bits(if(depth<=0x40000000) 30.W else 32.W))
     val s_axi_awlen           = Input(Bits(8.W))
     val s_axi_awsize          = Input(Bits(3.W))
     val s_axi_awburst         = Input(Bits(2.W))
@@ -259,8 +257,7 @@ class BoraLakeMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
     val s_axi_bvalid          = Output(Bool())
     //slave interface read address ports
     val s_axi_arid            = Input(Bits(4.W))
-    val s_axi_araddr          = Input(Bits(if(depth<=0x40000000L) 30.W else 32.W))
-    // val s_axi_araddr          = Input(Bits(30.W))
+    val s_axi_araddr          = Input(Bits(if(depth<=0x40000000) 30.W else 32.W))
     val s_axi_arlen           = Input(Bits(8.W))
     val s_axi_arsize          = Input(Bits(3.W))
     val s_axi_arburst         = Input(Bits(2.W))
@@ -298,7 +295,7 @@ class BoraLakeMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
     <ReferenceClock>No Buffer</ReferenceClock>
     <SysResetPolarity>ACTIVE HIGH</SysResetPolarity>
     <BankSelectionFlag>FALSE</BankSelectionFlag>
-    <InternalVref>0</InternalVref>
+    <InternalVref>1</InternalVref>
     <dci_hr_inouts_inputs>50 Ohms</dci_hr_inouts_inputs>
     <dci_cascade>0</dci_cascade>
     <FPGADevice>
