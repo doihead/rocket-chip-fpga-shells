@@ -146,6 +146,28 @@ class BoraLakeShell()(implicit p: Parameters) extends BoraLakeShellBasicOverlays
     xdc.addPackagePin(reset, "C26")
     xdc.addIOStandard(reset, "LVCMOS33")
 
+
+
+
+    val VREF0 = IO(Input(Bool()))
+    xdc.addPackagePin(VREF0, "H11")
+    xdc.addIOStandard(VREF0, "LVCMOS12")
+
+    val VREF1 = IO(Input(Bool()))
+    xdc.addPackagePin(VREF1, "C13")
+    xdc.addIOStandard(VREF1, "LVCMOS12")
+
+    val VREF2 = IO(Input(Bool()))
+    xdc.addPackagePin(VREF2, "D16")
+    xdc.addIOStandard(VREF2, "LVCMOS12")
+
+    val VREF3 = IO(Input(Bool()))
+    xdc.addPackagePin(VREF3, "J20")
+    xdc.addIOStandard(VREF3, "LVCMOS12")
+
+
+
+
     val reset_ibuf = Module(new IBUF)
     reset_ibuf.io.I := ~reset
     val sysclk: Clock = sys_clock.get() match {
