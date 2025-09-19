@@ -19,6 +19,7 @@ class SysClockSophiaLakePlacedOverlay(val shell: SophiaLakeShellBasicOverlays, n
     val clk: Clock = io
     shell.xdc.addPackagePin(clk, "V20")
     shell.xdc.addIOStandard(clk, "LVCMOS33")
+    shell.xdc.clockDedicatedRouteFalse(clk)
   } }
 }
 class SysClockSophiaLakeShellPlacer(val shell: SophiaLakeShellBasicOverlays, val shellInput: ClockInputShellInput)(implicit val valName: ValName)
@@ -59,7 +60,7 @@ class CTSResetSophiaLakeShellPlacer(val shell: SophiaLakeShellBasicOverlays, val
 
 
 
-case object SophiaLakeDDRSize extends Field[BigInt](0x1000000000L * 1) // 1 GB
+case object SophiaLakeDDRSize extends Field[BigInt](0x40000000L * 1) // 1 GB
 class DDRSophiaLakePlacedOverlay(val shell: SophiaLakeShellBasicOverlays, name: String, val designInput: DDRDesignInput, val shellInput: DDRShellInput)
   extends DDRPlacedOverlay[XilinxSophiaLakeMIGPads](name, designInput, shellInput)
 {
