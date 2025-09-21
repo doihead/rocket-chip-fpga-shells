@@ -9,7 +9,6 @@ import sifive.fpgashells.clocks._
 import sifive.fpgashells.ip.xilinx._
 import sifive.fpgashells.shell._
 import freechips.rocketchip.util.ElaborationArtefacts
-import freechips.rocketchip.util.{ElaborationArtefacts, SyncResetSynchronizerShiftReg}
 
 class SysClockSophiaLakePlacedOverlay(val shell: SophiaLakeShellBasicOverlays, name: String, val designInput: ClockInputDesignInput, val shellInput: ClockInputShellInput)
   extends SingleEndedClockInputXilinxPlacedOverlay(name, designInput, shellInput)
@@ -140,8 +139,6 @@ class SophiaLakeShell()(implicit p: Parameters) extends SophiaLakeShellBasicOver
     val reset = IO(Input(Bool()))
     xdc.addPackagePin(reset, "AB22")
     xdc.addIOStandard(reset, "LVCMOS33")
-    xdc.addIOB(reset)
-    xdc.addPulldown(reset)
 
     val reset_ibuf = Module(new IBUF)
     reset_ibuf.io.I := reset
@@ -153,11 +150,6 @@ class SophiaLakeShell()(implicit p: Parameters) extends SophiaLakeShellBasicOver
 
     resetPin := ~reset_ibuf.io.O
 
-    withClockAndReset(sysclk, false.B) {
-      pllReset := SyncResetSynchronizerShiftReg((reset_ibuf.io.O) || powerOnReset , 2, init = true.B, name=Some("reset_pll_sync")) //SophiaLake is active low reset
-    }
-
-    
-      
+    pllReset := (reset_ibuf.io.O) || powerOnReset //SophiaLake is active low reset
   }
 }
