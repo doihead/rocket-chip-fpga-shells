@@ -24,10 +24,10 @@ class XDC(val name: String)
     addConstraint(s"set_property IOSTANDARD {${standard}} ${io.sdcPin}")
   }
   def addPullup(io: IOPin) {
-    addConstraint(s"set_property PULLUP {TRUE} ${io.sdcPin}")
+    addConstraint(s"set_property PULLTYPE {PULLUP} ${io.sdcPin}")
   }
   def addPulldown(io: IOPin) {
-    addConstraint(s"set_property PULLDOWN {TRUE} ${io.sdcPin}")
+    addConstraint(s"set_property PULLTYPE {PULLDOWN} ${io.sdcPin}")
   }
   def addIOB(io: IOPin) {
     if (io.isOutput) {
