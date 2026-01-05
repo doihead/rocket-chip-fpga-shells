@@ -17,7 +17,7 @@ class SysClockSophiaLakePlacedOverlay(val shell: SophiaLakeShellBasicOverlays, n
 
   shell { InModuleBody {
     val clk: Clock = io
-    shell.xdc.addPackagePin(clk, "V20")
+    shell.xdc.addPackagePin(clk, "W19")
     shell.xdc.addIOStandard(clk, "LVCMOS33")
     shell.xdc.clockDedicatedRouteFalse(clk)
   } }

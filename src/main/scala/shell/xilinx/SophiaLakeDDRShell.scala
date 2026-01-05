@@ -290,7 +290,7 @@ class SophiaLakeMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
   <DataDepth_En>1024</DataDepth_En>
   <LowPower_En>ON</LowPower_En>
   <XADC_En>Enabled</XADC_En>
-  <TargetFPGA>xc7a200t-fbv484/-2L</TargetFPGA>
+  <TargetFPGA>xc7a100t-fgg484/-2</TargetFPGA>
   <Version>4.2</Version>
   <SystemClock>No Buffer</SystemClock>
   <ReferenceClock>No Buffer</ReferenceClock>
