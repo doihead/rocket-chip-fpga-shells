@@ -30,7 +30,7 @@ class SysClockBoraLakeShellPlacer(val shell: BoraLakeShellBasicOverlays, val she
 
 //LEDS - r0, g0, b0, 2 normal leds
 object LEDBoraLakePinConstraints{
-  val pins = Seq("D24", "D23", "F23", "E22", "G22", "E21")
+  val pins = Seq("N23", "P23", "M21", "M22", "P20", "N21")
 }
 class LEDBoraLakePlacedOverlay(val shell: BoraLakeShellBasicOverlays, name: String, val designInput: LEDDesignInput, val shellInput: LEDShellInput)
   extends LEDXilinxPlacedOverlay(name, designInput, shellInput, packagePin = Some(LEDBoraLakePinConstraints.pins(shellInput.number)))
@@ -96,8 +96,7 @@ class DDRBoraLakePlacedOverlay(val shell: BoraLakeShellBasicOverlays, name: Stri
     
     io <> port.viewAsSupertype(new XilinxBoraLakeMIGPads(mig.depth))
     ui.clock := port.ui_clk
-    // ui.reset := !port.mmcm_locked || port.ui_clk_sync_rst
-    ui.reset := !port.mmcm_locked || !port.ui_clk_sync_rst // ui_clk_sync_rst is flipped for it to work
+    ui.reset := !port.mmcm_locked || port.ui_clk_sync_rst
     port.sys_clk_i := dclk1.clock.asUInt
     port.clk_ref_i := dclk2.clock.asUInt
     port.sys_rst := shell.pllReset
@@ -146,39 +145,15 @@ class BoraLakeShell()(implicit p: Parameters) extends BoraLakeShellBasicOverlays
     xdc.addPackagePin(reset, "C26")
     xdc.addIOStandard(reset, "LVCMOS33")
 
-
-
-
-    val VREF0 = IO(Input(Bool()))
-    xdc.addPackagePin(VREF0, "H11")
-    xdc.addIOStandard(VREF0, "LVCMOS12")
-
-    val VREF1 = IO(Input(Bool()))
-    xdc.addPackagePin(VREF1, "C13")
-    xdc.addIOStandard(VREF1, "LVCMOS12")
-
-    val VREF2 = IO(Input(Bool()))
-    xdc.addPackagePin(VREF2, "D16")
-    xdc.addIOStandard(VREF2, "LVCMOS12")
-
-    val VREF3 = IO(Input(Bool()))
-    xdc.addPackagePin(VREF3, "J20")
-    xdc.addIOStandard(VREF3, "LVCMOS12")
-
-
-
-
     val reset_ibuf = Module(new IBUF)
-    reset_ibuf.io.I := ~reset
+    reset_ibuf.io.I := reset
     val sysclk: Clock = sys_clock.get() match {
       case Some(x: SysClockBoraLakePlacedOverlay) => x.clock
     }
     val powerOnReset = PowerOnResetFPGAOnly(sysclk)
     sdc.addAsyncPath(Seq(powerOnReset))
 
-    resetPin := reset_ibuf.io.O
-
-    pllReset :=
-      (~reset_ibuf.io.O) || powerOnReset //BoraLake is not active low reset
+    resetPin := ~reset_ibuf.io.O
+    pllReset := (reset_ibuf.io.O) || powerOnReset //SophiaLake is active low reset
   }
 }

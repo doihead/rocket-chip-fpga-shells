@@ -289,7 +289,7 @@ class BoraLakeMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
     <DataDepth_En>1024</DataDepth_En>
     <LowPower_En>ON</LowPower_En>
     <XADC_En>Enabled</XADC_En>
-    <TargetFPGA>xc7k160ti-ffg676/-2L</TargetFPGA>
+    <TargetFPGA>xc7k160t-fbg676/-2L</TargetFPGA>
     <Version>4.2</Version>
     <SystemClock>No Buffer</SystemClock>
     <ReferenceClock>No Buffer</ReferenceClock>
@@ -299,7 +299,7 @@ class BoraLakeMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
     <dci_hr_inouts_inputs>50 Ohms</dci_hr_inouts_inputs>
     <dci_cascade>0</dci_cascade>
     <FPGADevice>
-        <selected>7k/xc7k160t-ffg676</selected>
+        <selected>7k/xc7k160t-fbg676</selected>
     </FPGADevice>
     <Controller number="0">
         <MemoryDevice>DDR3_SDRAM/SODIMMs/MT8KTF51264HZ-1G6</MemoryDevice>
