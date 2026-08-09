@@ -296,19 +296,19 @@ class BoraLakeMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
     <SysResetPolarity>ACTIVE HIGH</SysResetPolarity>
     <BankSelectionFlag>FALSE</BankSelectionFlag>
     <InternalVref>0</InternalVref>
-    <dci_hr_inouts_inputs>50 Ohms</dci_hr_inouts_inputs>
+    <dci_hr_inouts_inputs>OFF</dci_hr_inouts_inputs>
     <dci_cascade>0</dci_cascade>
     <FPGADevice>
         <selected>7k/xc7k160t-fbg676</selected>
     </FPGADevice>
     <Controller number="0">
-        <MemoryDevice>DDR3_SDRAM/SODIMMs/MT8KTF51264HZ-1G9</MemoryDevice>
+        <MemoryDevice>DDR3_SDRAM/SODIMMs/MT8KTF51264HZ-1G6</MemoryDevice>
         <TimePeriod>3000</TimePeriod>
         <VccAuxIO>1.8V</VccAuxIO>
         <PHYRatio>4:1</PHYRatio>
         <InputClkFreq>166.666</InputClkFreq>
         <UIExtraClocks>0</UIExtraClocks>
-        <MMCM_VCO>800</MMCM_VCO>
+        <MMCM_VCO>666</MMCM_VCO>
         <MMCMClkOut0> 1.000</MMCMClkOut0>
         <MMCMClkOut1>1</MMCMClkOut1>
         <MMCMClkOut2>1</MMCMClkOut2>
@@ -451,11 +451,11 @@ class BoraLakeMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
           <Pin Bank="Select Bank" PADName="No connect" name="tg_compare_error"/>
         </System_Control>
         <TimingParameters>
-          <Parameters tcke="5" tfaw="27" tras="34" trcd="13.91" trefi="7.8" trfc="260" trp="13.91" trrd="5" trtp="7.5" twtr="7.5"/>
+          <Parameters tcke="5" tfaw="30" tras="35" trcd="13.75" trefi="7.8" trfc="260" trp="13.75" trrd="6" trtp="7.5" twtr="7.5"/>
         </TimingParameters>
         <mrBurstLength name="Burst Length" >8 - Fixed</mrBurstLength>
         <mrBurstType name="Read Burst Type and Length" >Sequential</mrBurstType>
-        <mrCasLatency name="CAS Latency" >6</mrCasLatency>
+        <mrCasLatency name="CAS Latency" >5</mrCasLatency>
         <mrMode name="Mode" >Normal</mrMode>
         <mrDllReset name="DLL Reset" >No</mrDllReset>
         <mrPdMode name="DLL control for precharge PD" >Slow Exit</mrPdMode>
@@ -469,14 +469,14 @@ class BoraLakeMIG(depth : BigInt)(implicit val p:Parameters) extends BlackBox
         <emrDQS name="TDQS enable" >Enabled</emrDQS>
         <emrRDQS name="Qoff" >Output Buffer Enabled</emrRDQS>
         <mr2PartialArraySelfRefresh name="Partial-Array Self Refresh" >Full Array</mr2PartialArraySelfRefresh>
-        <mr2CasWriteLatency name="CAS write latency" >8</mr2CasWriteLatency>
+        <mr2CasWriteLatency name="CAS write latency" >5</mr2CasWriteLatency>
         <mr2AutoSelfRefresh name="Auto Self Refresh" >Enabled</mr2AutoSelfRefresh>
         <mr2SelfRefreshTempRange name="High Temparature Self Refresh Rate" >Normal</mr2SelfRefreshTempRange>
         <mr2RTTWR name="RTT_WR - Dynamic On Die Termination (ODT)" >Dynamic ODT off</mr2RTTWR>
         <PortInterface>AXI</PortInterface>
         <AXIParameters>
             <C0_C_RD_WR_ARB_ALGORITHM>RD_PRI_REG</C0_C_RD_WR_ARB_ALGORITHM>
-            <C0_S_AXI_ADDR_WIDTH>30</C0_S_AXI_ADDR_WIDTH>
+            <C0_S_AXI_ADDR_WIDTH>32</C0_S_AXI_ADDR_WIDTH>
             <C0_S_AXI_DATA_WIDTH>64</C0_S_AXI_DATA_WIDTH>
             <C0_S_AXI_ID_WIDTH>4</C0_S_AXI_ID_WIDTH>
             <C0_S_AXI_SUPPORTS_NARROW_BURST>0</C0_S_AXI_SUPPORTS_NARROW_BURST>
